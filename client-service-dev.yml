@@ -1,9 +1,7 @@
-# Configuration spécifique pour le micro-service Client
 server:
-  port: 8081  # C'est ici qu'on définit le port, pas dans IntelliJ !
+  port: 8081
 
 spring:
-  # Configuration de la base de données en mémoire (H2) pour le TP
   datasource:
     url: jdbc:h2:mem:testdb
     driverClassName: org.h2.Driver
@@ -14,17 +12,11 @@ spring:
       enabled: true
       path: /h2-console
 
-  # Configuration JPA / Hibernate
-  jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
-    hibernate:
-      ddl-auto: update
-    show-sql: true
-
-# Configuration pour que le service s'enregistre dans Eureka
 eureka:
   client:
     serviceUrl:
       defaultZone: http://localhost:10001/eureka/
   instance:
+    # CES DEUX LIGNES SONT CELLES QUI MANQUENT :
     prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
